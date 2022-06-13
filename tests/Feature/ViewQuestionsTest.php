@@ -10,12 +10,6 @@ class ViewQuestionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void {
-        parent::setUp();
-
-        $this->withoutExceptionHandling();
-    }
-
     /** @test */
     public function user_can_view_questions() {
         // 0. 抛出异常
