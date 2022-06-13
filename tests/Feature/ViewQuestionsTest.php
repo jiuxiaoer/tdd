@@ -26,7 +26,7 @@ class ViewQuestionsTest extends TestCase
     /** @test */
     public function user_can_view_a_single_question() {
         // 1. 创建一个问题
-        $question = Question::factory()->create();
+        $question = Question::factory()->create(['published_at' => Carbon::parse('-1 week')]);
 
         // 2. 访问链接
         $test = $this->get('/questions/' . $question->id);
