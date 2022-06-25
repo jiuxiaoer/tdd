@@ -22,7 +22,7 @@ class PostAnswersTest extends TestCase
             'content' => 'This is a answer.'
         ]);
         // 我们要看到预期结果
-        $response->assertStatus(201);
+        $response->assertStatus(302);
 
         $answer = $question->answers()->where('user_id', $user->id)->first();
         $this->assertNotNull($answer);
@@ -33,7 +33,7 @@ class PostAnswersTest extends TestCase
     /** @test */
     public function can_not_post_an_answer_to_an_unpublished_question() {
         $question = Question::factory()->unpublished()->create();
-        $user     = User::factory()->create();
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->withExceptionHandling()
             ->post("/questions/{$question->id}/answers", [
@@ -53,7 +53,7 @@ class PostAnswersTest extends TestCase
         $this->withExceptionHandling();
 
         $question = Question::factory()->published()->create();
-        $user = User::factory()->create();
+        $this->actingAs($user = User::factory()->create());
 
         $response = $this->post("/questions/{$question->id}/answers", [
             'user_id' => $user->id,
@@ -62,5 +62,19 @@ class PostAnswersTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasErrors('content');
+    }
+
+
+
+    /** @test */
+    public function guests_may_not_post_an_answer()
+    {
+        $this->expectException('Illuminate\Auth\AuthenticationException');
+
+        $question = Question::factory()->published()->create();
+
+        $this->post("/questions/{$question->id}/answers", [
+            'content' => 'This is an answer.'
+        ]);
     }
 }
