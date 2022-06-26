@@ -51,4 +51,9 @@ class Question extends Model
             'best_answer_id' => $answer->id
         ]);
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

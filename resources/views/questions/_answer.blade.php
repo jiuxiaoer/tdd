@@ -7,8 +7,8 @@
 
   <div class="media-body">
     <div class="media-heading mt-0 mb-1 text-secondary">
-      <a href="#" title="Jobs">
-        Jobs
+      <a href="#" title="{{ $answer->owner->name }}">
+        {{ $answer->owner->name }}
       </a>
       <span class="text-secondary"> • </span>
       <span class="meta text-secondary" title="{{ $answer->created_at }}">{{ $answer->created_at->diffForHumans() }}</span>
