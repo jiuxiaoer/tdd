@@ -32,5 +32,7 @@
   @include('layouts._footer')
 </div>
 </body>
-
+@if (config('app.debug'))
+  @include('sudosu::user-selector')
+@endif
 </html>
