@@ -35,4 +35,9 @@
 @if (config('app.debug'))
   @include('sudosu::user-selector')
 @endif
+<script>
+  window.App = {!! json_encode([
+        'signedIn' => Auth::check()
+    ]) !!}
+</script>
 </html>
