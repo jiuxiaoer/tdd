@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Question;
 use App\Models\User;
 use Carbon\Carbon;
@@ -16,6 +17,9 @@ class QuestionFactory extends Factory
         return [
             'user_id' => function () {
                 return User::factory()->create()->id;
+            },
+            'category_id' => function () {
+                return Category::factory()->create()->id;
             },
             'title' => $this->faker->sentence,
             'content' => $this->faker->text

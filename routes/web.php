@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 Route::get('/questions', 'QuestionsController@index');
 Route::get('/questions/{question}', 'QuestionsController@show');
-
+Route::post('/questions', 'QuestionsController@store')->name('questions.store');
 Route::post('/questions/{question}/answers', 'AnswersController@store');
 
 Route::post('/answers/{answer}/best', 'BestAnswersController@store')->name('best-answers.store');
