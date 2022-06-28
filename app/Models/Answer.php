@@ -31,7 +31,10 @@ class Answer extends Model
     use HasFactory;
     use Traits\VoteTrait;
     protected $guarded = ['id'];
-
+    protected $appends = [
+        'upVotesCount',
+        'downVotesCount',
+    ];
     public function question() {
         return $this->belongsTo(Question::class);
     }

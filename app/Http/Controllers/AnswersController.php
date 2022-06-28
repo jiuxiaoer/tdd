@@ -18,7 +18,7 @@ class AnswersController extends Controller
     {
         $this->authorize('delete', $answer);
         $answer->delete();
-        return back();
+        return back()->with('flash', '删除成功！');
     }
     public function store($questionId) {
         $question = Question::published()->findOrFail($questionId);
@@ -30,6 +30,6 @@ class AnswersController extends Controller
             'content' => request('content')
         ]);
 
-        return back();
+        return back()->with('flash', '回答发布成功！');
     }
 }
