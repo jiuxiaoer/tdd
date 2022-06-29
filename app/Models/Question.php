@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
-
+    use Traits\VoteTrait;
     // 这里也放开了属性保护
     protected $guarded = ['id'];
 
