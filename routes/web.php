@@ -7,9 +7,8 @@ Auth::routes(['verify' => true]);
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/questions', 'QuestionsController@index');
+Route::get('/questions/{category?}', 'QuestionsController@index')->name('questions.index');
 Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
-Route::get('/questions/{question}', 'QuestionsController@show');
 Route::post('/questions', 'QuestionsController@store')->name('questions.store');
 Route::post('/questions/{question}/answers', 'AnswersController@store');
 Route::post('/questions/{question}/published-questions', 'PublishedQuestionsController@store')->name('published-questions.store');
@@ -22,3 +21,6 @@ Route::post('/answers/{answer}/down-votes', 'AnswerDownVotesController@store')->
 Route::delete('/answers/{answer}/down-votes', 'AnswerDownVotesController@destroy')->name('answer-down-votes.destroy');
 
 Route::get('/drafts', 'DraftsController@index');
+
+
+Route::get('/questions/{question}', 'QuestionsController@show');
