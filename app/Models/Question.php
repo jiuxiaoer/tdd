@@ -54,7 +54,10 @@ class Question extends Model
             'best_answer_id' => $answer->id
         ]);
     }
-
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
     public function creator() {
         return $this->belongsTo(User::class, 'user_id');
     }

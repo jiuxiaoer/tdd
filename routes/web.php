@@ -27,3 +27,5 @@ Route::get('/drafts', 'DraftsController@index');
 
 
 Route::get('/questions/{category}/{question}', 'QuestionsController@show');
+Route::post('/questions/{question}/subscriptions', 'SubscribeQuestionsController@store')->name('subscribe-questions.store');
+Route::delete('/questions/{question}/subscriptions', 'SubscribeQuestionsController@destroy')->name('subscribe-questions.destroy');
