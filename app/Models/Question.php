@@ -41,7 +41,10 @@ class Question extends Model
     public function scopePublished($query) {
         return $query->whereNotNull('published_at');
     }
-
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
     public function answers() {
         return $this->hasMany(Answer::class);
     }
