@@ -24,14 +24,14 @@ class QuestionsController extends Controller
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
         ]);
-        $question = Question::create([
+        Question::create([
             'user_id' => auth()->id(),
             'category_id' => request('category_id'),
             'title' => request('title'),
             'content' => request('content'),
         ]);
 
-        return redirect("/questions/$question->id")->with('flash', '创建成功！');
+        return redirect("/drafts")->with('flash', '保存成功！');
     }
     public function show($questionId)
     {
