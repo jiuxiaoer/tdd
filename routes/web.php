@@ -23,4 +23,4 @@ Route::delete('/answers/{answer}/down-votes', 'AnswerDownVotesController@destroy
 Route::get('/drafts', 'DraftsController@index');
 
 
-Route::get('/questions/{question}', 'QuestionsController@show');
+Route::get('/questions/{category}/{question}', 'QuestionsController@show');

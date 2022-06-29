@@ -46,4 +46,13 @@ class Answer extends Model
     public function owner() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot(); //
+
+        static::created(function ($reply) {
+            $reply->question->increment('answers_count');
+        });
+    }
 }

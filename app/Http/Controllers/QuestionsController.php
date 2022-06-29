@@ -45,7 +45,7 @@ class QuestionsController extends Controller
 
         return redirect("/drafts")->with('flash', '保存成功！');
     }
-    public function show($questionId)
+    public function show($category, $questionId)
     {
         $question = Question::published()->findOrFail($questionId);
 

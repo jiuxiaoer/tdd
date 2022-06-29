@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Questions;
 
+use App\Models\Answer;
 use App\Models\Category;
 use App\Models\Question;
 use App\Models\User;
@@ -22,7 +23,7 @@ class FilterQuestionsTest extends TestCase
         create(Question::class, ['published_at' => Carbon::now()], 30);
 
         // 创建的第一个 Question
-        $publishedQuestion = Question::find(1);
+        $publishedQuestion = Question::first();
 
         $response = $this->get('/questions');
         $response->assertSee($publishedQuestion->title)
@@ -61,5 +62,40 @@ class FilterQuestionsTest extends TestCase
         $this->get('questions?by=john')
             ->assertSee($questionByJohn->title)
             ->assertDontSee($questionNotByJohn->title);
+    }
+    /** @test */
+    public function user_can_filter_questions_by_popularity()
+    {
+        // Question without answers
+        $this->publishQuestion();
+
+        // Question with two answers
+        $questionOfTwoAnswers = $this->publishQuestion();
+        create(Answer::class, ['question_id' => $questionOfTwoAnswers->id], 2);
+
+        // Question with three answers
+        $questionOfThreeAnswers = $this->publishQuestion();
+        create(Answer::class, ['question_id' => $questionOfThreeAnswers->id], 3);
+
+        $response = $this->get('questions?popularity=1');
+
+        $questions = $response->data('questions')->items();
+
+        $this->assertEquals([3,2,0], array_column($questions, 'answers_count'));
+    }
+
+    /** @test */
+    public function a_user_can_filter_unanswered_questions()
+    {
+        $this->publishQuestion();
+
+        $questionOfTwoAnswers = $this->publishQuestion();;
+        create(Answer::class, ['question_id' => $questionOfTwoAnswers->id], 2);
+
+        $response = $this->get('questions?unanswered=1');
+
+        $result = $response->data('questions')->toArray();
+
+        $this->assertEquals(1, $result['total']);
     }
 }
