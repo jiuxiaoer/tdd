@@ -20,12 +20,15 @@ class AnswersController extends Controller
         $answer->delete();
         return back()->with('flash', '删除成功！');
     }
-    public function store($questionId) {
+    public function store($questionId)
+    {
         $question = Question::published()->findOrFail($questionId);
-        $this->validate(request(), [
+
+        $this->validate(request(),[
             'content' => 'required'
         ]);
-        $question->answers()->create([
+
+        $answer = $question->addAnswer([
             'user_id' => auth()->id(),
             'content' => request('content')
         ]);

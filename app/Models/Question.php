@@ -79,4 +79,28 @@ class Question extends Model
     {
         return $query->where(['user_id' => $userId])->whereNull('published_at');
     }
+
+    public function subscribe($userId)
+    {
+        $this->subscriptions()->create([
+            'user_id' => $userId
+        ]);
+
+        return $this;
+    }
+    public function unsubscribe($userId)
+    {
+        $this->subscriptions()
+            ->where('user_id', $userId)
+            ->delete();
+
+        return $this;
+    }
+
+    public function addAnswer($answer)
+    {
+        $answer = $this->answers()->create($answer);
+
+        return $answer;
+    }
 }
