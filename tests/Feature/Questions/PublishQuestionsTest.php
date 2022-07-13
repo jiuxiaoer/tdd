@@ -12,6 +12,7 @@ class PublishQuestionsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    /** @test */
     public function can_publish_question()
     {
         $this->signIn();
@@ -20,7 +21,8 @@ class PublishQuestionsTest extends TestCase
 
         $this->assertCount(0, Question::published()->get());
 
-        $this->postJson(route('published-questions.store', ['question' => $question]));
+        $this->post(route('published-questions.store', ['question' => $question]))
+            ->assertRedirect($question->refresh()->path());
 
         $this->assertCount(1, Question::published()->get());
     }

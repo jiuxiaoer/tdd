@@ -51,6 +51,10 @@ class Question extends Model
     public function scopePublished($query) {
         return $query->whereNotNull('published_at');
     }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
@@ -118,7 +122,10 @@ class Question extends Model
 
         return $answer;
     }
-
+    public function path()
+    {
+        return $this->slug ? "/questions/{$this->category->slug}/{$this->id}/{$this->slug}" : "/questions/{$this->category->slug}/{$this->id}";
+    }
     public function isSubscribedTo($user)
     {
         if (! $user) {
