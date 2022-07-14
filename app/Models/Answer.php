@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read mixed $up_votes_count
  * @property-read \App\Models\User|null $owner
  * @property-read \App\Models\Question|null $question
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
  */
 class Answer extends Model
 {
@@ -38,7 +40,12 @@ class Answer extends Model
     protected $appends = [
         'upVotesCount',
         'downVotesCount',
+        'commentsCount',
     ];
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments->count();
+    }
     public function question() {
         return $this->belongsTo(Question::class);
     }
@@ -50,7 +57,19 @@ class Answer extends Model
     public function owner() {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commented');
+    }
+    public function comment($content, $user)
+    {
+        $comment =  $this->comments()->create([
+            'user_id' => $user->id,
+            'content' => $content
+        ]);
 
+        return $comment;
+    }
     protected static function boot()
     {
         parent::boot(); //

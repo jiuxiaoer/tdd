@@ -30,3 +30,4 @@ Route::get('/questions/{category}/{question}/{slug?}', 'QuestionsController@show
 Route::post('/questions/{question}/subscriptions', 'SubscribeQuestionsController@store')->name('subscribe-questions.store');
 Route::delete('/questions/{question}/subscriptions', 'SubscribeQuestionsController@destroy')->name('subscribe-questions.destroy');
 Route::post('/questions/{question}/comments', 'QuestionCommentsController@store')->name('question-comments.store');
+Route::post('/answers/{answer}/comments', 'AnswerCommentsController@store')->name('answer-comments.store');
