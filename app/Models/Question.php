@@ -54,6 +54,7 @@ class Question extends Model
 {
     use HasFactory;
     use Traits\VoteTrait;
+    use Traits\CommentTrait;
     // 这里也放开了属性保护
     protected $guarded = ['id'];
 
@@ -63,10 +64,6 @@ class Question extends Model
         'subscriptionsCount',
         'commentsCount',
     ];
-    public function getCommentsCountAttribute()
-    {
-        return $this->comments->count();
-    }
     public function getSubscriptionsCountAttribute()
     {
         return $this->subscriptions->count();
@@ -97,10 +94,6 @@ class Question extends Model
     }
     public function creator() {
         return $this->belongsTo(User::class, 'user_id');
-    }
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commented');
     }
     public function publish() {
         $this->update([
@@ -161,15 +154,6 @@ class Question extends Model
         return $this->subscriptions()
             ->where('user_id', $user->id)
             ->exists();
-    }
-    public function comment($content, $user)
-    {
-        $comment =  $this->comments()->create([
-            'user_id' => $user->id,
-            'content' => $content
-        ]);
-
-        return $comment;
     }
 
 }
