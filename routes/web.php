@@ -31,3 +31,12 @@ Route::post('/questions/{question}/subscriptions', 'SubscribeQuestionsController
 Route::delete('/questions/{question}/subscriptions', 'SubscribeQuestionsController@destroy')->name('subscribe-questions.destroy');
 Route::post('/questions/{question}/comments', 'QuestionCommentsController@store')->name('question-comments.store');
 Route::post('/answers/{answer}/comments', 'AnswerCommentsController@store')->name('answer-comments.store');
+
+
+Route::delete('/questions/{question}/down-votes', 'QuestionDownVotesController@destroy')->name('question-down-votes.destroy');
+
+Route::post('/comments/{comment}/up-votes', 'CommentUpVotesController@store')->name('comment-up-votes.store');
+Route::delete('/comments/{comment}/up-votes', 'CommentUpVotesController@destroy')->name('comment-up-votes.destroy');
+
+Route::post('/comments/{comment}/down-votes', 'CommentDownVotesController@store')->name('comment-down-votes.store');
+Route::delete('/comments/{comment}/down-votes', 'CommentDownVotesController@destroy')->name('comment-down-votes.destroy');
