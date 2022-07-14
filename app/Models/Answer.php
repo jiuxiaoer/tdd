@@ -25,6 +25,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Answer whereUserId($value)
  * @mixin \Eloquent
+ * @property-read mixed $down_votes_count
+ * @property-read mixed $up_votes_count
+ * @property-read \App\Models\User|null $owner
+ * @property-read \App\Models\Question|null $question
  */
 class Answer extends Model
 {

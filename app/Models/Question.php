@@ -31,6 +31,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Question whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $best_answer_id
+ * @property int $category_id
+ * @property string|null $slug
+ * @property-read \App\Models\Category|null $category
+ * @property-read \App\Models\User|null $creator
+ * @property-read mixed $down_votes_count
+ * @property-read int|null $subscriptions_count
+ * @property-read mixed $up_votes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription[] $subscriptions
+ * @method static \Illuminate\Database\Eloquent\Builder|Question drafts($userId)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question filter($filters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question published()
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereAnswersCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereBestAnswerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereCategoryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Question whereSlug($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
  */
 class Question extends Model
 {
@@ -43,7 +61,12 @@ class Question extends Model
         'upVotesCount',
         'downVotesCount',
         'subscriptionsCount',
+        'commentsCount',
     ];
+    public function getCommentsCountAttribute()
+    {
+        return $this->comments->count();
+    }
     public function getSubscriptionsCountAttribute()
     {
         return $this->subscriptions->count();
@@ -75,7 +98,10 @@ class Question extends Model
     public function creator() {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commented');
+    }
     public function publish() {
         $this->update([
             'published_at' => Carbon::now()
@@ -136,6 +162,14 @@ class Question extends Model
             ->where('user_id', $user->id)
             ->exists();
     }
+    public function comment($content, $user)
+    {
+        $comment =  $this->comments()->create([
+            'user_id' => $user->id,
+            'content' => $content
+        ]);
 
+        return $comment;
+    }
 
 }
