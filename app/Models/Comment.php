@@ -27,6 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
  * @mixin \Eloquent
+ * @property-read Model|\Eloquent $commented
+ * @property-read mixed $down_votes_count
+ * @property-read mixed $up_votes_count
+ * @property-read \App\Models\User|null $owner
  */
 class Comment extends Model
 {
