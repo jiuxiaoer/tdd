@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Events\PostComment;
 use App\Jobs\TranslateSlug;
 use App\Models\Answer;
 use App\Models\Category;
@@ -10,7 +11,9 @@ use App\Models\Question;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Notifications\QuestionWasUpdated;
+use App\Notifications\YouWereMentionedInComment;
 use Carbon\Carbon;
+use Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 // 使用 `php artisan make:test QuestionTest --unit` 命令生成后,
 // 需要将 use PHPUnit\Framework\TestCase; 改成 `use Tests\TestCase;`
@@ -21,7 +24,12 @@ use Tests\TestCase;
 class QuestionTest extends TestCase
 {
     use RefreshDatabase;
+    use AddCommentContractTest;
 
+    public function getCommentModel()
+    {
+        return create(Question::class);
+    }
     /** @test */
     public function a_question_has_many_answers()
     {
@@ -246,4 +254,7 @@ class QuestionTest extends TestCase
 
         $this->assertEquals(1, $question->refresh()->commentsCount);
     }
+
+
+
 }

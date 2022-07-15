@@ -55,6 +55,7 @@ class Question extends Model
     use HasFactory;
     use Traits\VoteTrait;
     use Traits\CommentTrait;
+    use Traits\InvitedUsersTrait;
     // 这里也放开了属性保护
     protected $guarded = ['id'];
 
@@ -100,13 +101,6 @@ class Question extends Model
             'published_at' => Carbon::now()
         ]);
     }
-
-    public function invitedUsers() {
-        preg_match_all('/@([^\s.]+)/', $this->content, $matches);
-
-        return $matches[1];
-    }
-
 
     public function scopeDrafts($query, $userId)
     {
