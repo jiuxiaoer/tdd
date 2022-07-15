@@ -26,12 +26,14 @@ Route::delete('/questions/{question}/down-votes', 'QuestionDownVotesController@d
 Route::get('/drafts', 'DraftsController@index');
 
 
-Route::get('/questions/{category}/{question}/{slug?}', 'QuestionsController@show')->name('questions.show');
+
 Route::post('/questions/{question}/subscriptions', 'SubscribeQuestionsController@store')->name('subscribe-questions.store');
 Route::delete('/questions/{question}/subscriptions', 'SubscribeQuestionsController@destroy')->name('subscribe-questions.destroy');
 Route::post('/questions/{question}/comments', 'QuestionCommentsController@store')->name('question-comments.store');
 Route::post('/answers/{answer}/comments', 'AnswerCommentsController@store')->name('answer-comments.store');
-
+Route::get('/questions/{question}/comments', 'QuestionCommentsController@index')->name('question-comments.index');
+Route::get('/answers/{answer}/comments', 'AnswerCommentsController@index')->name('answer-comments.index');
+Route::get('/questions/{category}/{question}/{slug?}', 'QuestionsController@show')->name('questions.show');
 
 Route::delete('/questions/{question}/down-votes', 'QuestionDownVotesController@destroy')->name('question-down-votes.destroy');
 
@@ -40,3 +42,5 @@ Route::delete('/comments/{comment}/up-votes', 'CommentUpVotesController@destroy'
 
 Route::post('/comments/{comment}/down-votes', 'CommentDownVotesController@store')->name('comment-down-votes.store');
 Route::delete('/comments/{comment}/down-votes', 'CommentDownVotesController@destroy')->name('comment-down-votes.destroy');
+
+
