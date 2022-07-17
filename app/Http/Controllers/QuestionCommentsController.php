@@ -18,7 +18,7 @@ class QuestionCommentsController extends Controller
         $question = Question::published()->findOrFail($questionId);
         $comment  = $question->comment(request('content'), auth()->user());
 
-        return back();
+        return $comment->load('owner');
     }
 
     public function index(Question $question) {

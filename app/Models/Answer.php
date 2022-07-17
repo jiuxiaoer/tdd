@@ -37,11 +37,14 @@ class Answer extends Model
     use HasFactory;
     use Traits\VoteTrait;
     use Traits\CommentTrait;
+
+    protected $table = 'answers';
     protected $guarded = ['id'];
     protected $appends = [
         'upVotesCount',
         'downVotesCount',
         'commentsCount',
+        'commentEndpoint',
     ];
     public function question() {
         return $this->belongsTo(Question::class);
@@ -62,4 +65,6 @@ class Answer extends Model
             $reply->question->increment('answers_count');
         });
     }
+
+
 }
