@@ -70,4 +70,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $appends = [ 'userAvatar'];
+
+    public function getUserAvatarAttribute()
+    {
+        return $this->avatar();
+    }
+    public function avatar()
+    {
+        if ($this->avatar_path) {
+            $file_path = $this->avatar_path;
+        } else {
+            $file_path = 'avatars/default.png';
+        }
+
+        return asset('storage/' . $file_path);
+    }
 }

@@ -1,10 +1,16 @@
 <template>
   <div>
     <a v-if="display">
-      <button v-if="isSubscribedTo" @click="toggleSubscription" class="btn btn-outline-secondary btn-sm mr-2"><i class="fa fa-eye-slash"></i> 取消关注</button>
-      <button v-else @click="toggleSubscription" class="btn btn-primary btn-sm mr-2"><i class="fa fa-eye"></i> 关注问题</button>
+      <button v-if="isSubscribedTo" @click="toggleSubscription" class="btn btn-outline-secondary btn-sm mr-2"><i
+        class="fa fa-eye-slash"></i> 取消关注
+      </button>
+      <button v-else @click="toggleSubscription" class="btn btn-primary btn-sm mr-2"><i class="fa fa-eye"></i> 关注问题
+      </button>
     </a>
-
+    <a class="text-secondary">
+      <i class="fa fa-folder"></i>
+      <span v-text="this.question.category.name"></span>
+    </a>
     <a class="text-secondary">
       <i class="fa fa-eye"></i>
       <span v-text="subscriptionsCount"></span> 人关注
@@ -23,7 +29,8 @@
       <span v-text="commentsCount"></span> 个评论
     </a>
 
-    <div class="modal fade" :id="modalQuestionId" tabindex="-1" role="dialog" :aria-labelledby="modalQuestionId" aria-hidden="true">
+    <div class="modal fade" :id="modalQuestionId" tabindex="-1" role="dialog" :aria-labelledby="modalQuestionId"
+         aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content" style="height:750px">
           <div class="modal-header">
@@ -41,14 +48,16 @@
     <span> • </span>
     <a v-if="signedIn" class="text-secondary">
 
-      <button type="submit" :class="voteUpClasses" @click="toggleVoteUp" style="background-color:transparent;border-style:none;">
+      <button type="submit" :class="voteUpClasses" @click="toggleVoteUp"
+              style="background-color:transparent;border-style:none;">
         <span></span>
         <span v-text="upVotesCount"></span>
       </button>
 
       <span> • </span>
 
-      <button type="submit" :class="voteDownClasses" @click="toggleVoteDown" style="background-color:transparent;border-style:none;">
+      <button type="submit" :class="voteDownClasses" @click="toggleVoteDown"
+              style="background-color:transparent;border-style:none;">
         <span></span>
         <span v-text="downVotesCount"></span>
       </button>
