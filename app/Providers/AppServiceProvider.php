@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Answer;
 use App\Models\Category;
 use App\Models\Question;
+use App\Observers\AnswerObserver;
 use App\Observers\QuestionObserver;
 use App\Translator\BaiduSlugTranslator;
 use App\Translator\Translator;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         //
         \Illuminate\Pagination\Paginator::useBootstrap();
         Question::observe(QuestionObserver::class);
+        Answer::observe(AnswerObserver::class);
         \View::composer('*',function ($view){
             $view->with('categories', Category::all());
         });

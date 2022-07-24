@@ -13,7 +13,18 @@ class AnswerTest extends TestCase
 {
     use RefreshDatabase;
     use AddCommentContractTest;
+    use ActivitiesContractTest;
 
+
+    public function getActivityModel()
+    {
+        return create(Answer::class);
+    }
+
+    public function getActivityType()
+    {
+        return 'created_answer';
+    }
     public function getCommentModel()
     {
         return create(Answer::class);

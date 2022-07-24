@@ -37,6 +37,7 @@ class Answer extends Model
     use HasFactory;
     use Traits\VoteTrait;
     use Traits\CommentTrait;
+    use Traits\RecordActivityTrait;
 
     protected $table = 'answers';
     protected $guarded = ['id'];

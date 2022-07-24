@@ -25,7 +25,17 @@ class QuestionTest extends TestCase
 {
     use RefreshDatabase;
     use AddCommentContractTest;
+    use ActivitiesContractTest;
 
+    public function getActivityModel()
+    {
+        return create(Question::class);
+    }
+
+    public function getActivityType()
+    {
+        return 'published_question';
+    }
     public function getCommentModel()
     {
         return create(Question::class);
