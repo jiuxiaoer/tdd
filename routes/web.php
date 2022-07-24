@@ -45,3 +45,4 @@ Route::delete('/comments/{comment}/down-votes', 'CommentDownVotesController@dest
 
 
 Route::post('/users/{user}/avatar', 'UserAvatarsController@store')->name('user-avatars.store');
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('users.show');

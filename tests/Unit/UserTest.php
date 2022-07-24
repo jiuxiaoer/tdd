@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Activity;
 use App\Models\User;
 use Tests\Testcase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,5 +38,15 @@ class UserTest extends TestCase
         ]);
 
         $this->assertEquals(url('storage/avatars/example.png'), $user->userAvatar);
+    }
+
+    /** @test */
+    public function a_user_has_many_activities()
+    {
+        $user = create(User::class);
+
+        create(Activity::class, ['user_id' => $user->id]);
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\HasMany', $user->activities());
     }
 }

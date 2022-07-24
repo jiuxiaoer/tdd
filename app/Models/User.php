@@ -87,4 +87,8 @@ class User extends Authenticatable
 
         return asset('storage/' . $file_path);
     }
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
