@@ -44,3 +44,4 @@ Route::post('/comments/{comment}/down-votes', 'CommentDownVotesController@store'
 Route::delete('/comments/{comment}/down-votes', 'CommentDownVotesController@destroy')->name('comment-down-votes.destroy');
 
 
+Route::post('/users/{user}/avatar', 'UserAvatarsController@store')->name('user-avatars.store');
