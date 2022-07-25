@@ -16,7 +16,7 @@ class QuestionsController extends Controller
         $this->middleware('auth')->except(['show','index']);
         $this->middleware('must-verify-email')->except(['index', 'show']);
     }
-    public function index(Category $category, QuestionFilter $filters)
+    public function index(Category $category, QuestionFilter $filters, User $user)
     {
         if ($category->exists) {
             $questions = Question::published()->where('category_id', $category->id);
@@ -26,12 +26,15 @@ class QuestionsController extends Controller
 
         $questions = $questions->filter($filters)->paginate(20);
 
-        array_map(function (&$item) {
+        array_map(function ($item) {
             return $this->appendAttribute($item);
         }, $questions->items());
 
+        $activeUsers = $user->getActiveUsers();
+
         return view('questions.index', [
-            'questions' => $questions
+            'questions' => $questions,
+            'activeUsers' => $activeUsers
         ]);
     }
     public function store()
