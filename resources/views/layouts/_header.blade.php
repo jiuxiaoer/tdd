@@ -4,34 +4,27 @@
     <a class="navbar-brand " href="{{ url('/') }}">
       Zhihu
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <!-- Left Side Of Navbar -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item {{ active_class(empty(request()->only(['by', 'popularity', 'unanswered']))) }}"><a
-            class="nav-link" href="/questions">发现</a></li>
+        <li class="nav-item {{ active_class(empty(request()->only(['by', 'popularity', 'unanswered']))) }}"><a class="nav-link" href="/questions">发现</a></li>
         @auth
-          <li class="nav-item {{ active_class(request()->has('by')) }}"><a class="nav-link"
-                                                                           href="/questions?by={{ Auth::user()->name }}">我发布的问题</a>
-          </li>
+          <li class="nav-item {{ active_class(request()->has('by')) }}"><a class="nav-link" href="/questions?by={{ Auth::user()->name }}">我发布的问题</a></li>
         @endauth
-        <li class="nav-item {{ active_class(request()->has('popularity') && request('popularity') == "1" ) }}"><a
-            class="nav-link" href="/questions?popularity=1">热门问题</a></li>
+        <li class="nav-item {{ active_class(request()->has('popularity') && request('popularity') == "1" ) }}"><a class="nav-link" href="/questions?popularity=1">热门问题</a></li>
 
-        <li class="nav-item {{ active_class(request()->has('unanswered') && request('unanswered') == "1" ) }}"><a
-            class="nav-link" href="/questions?unanswered=1">等你来答</a></li>
+        <li class="nav-item {{ active_class(request()->has('unanswered') && request('unanswered') == "1" ) }}"><a class="nav-link" href="/questions?unanswered=1">等你来答</a></li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-             aria-expanded="false">分类列表 </a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">分类列表 </a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             @foreach($categories as $category)
-              <li><a class="dropdown-item" href="/questions/{{ $category->slug }}">{{ $category->name }}</a></li>
+              <li><a class="dropdown-item" href="/questions/{{ $category->slug }}">{{ $category->name }}</a> </li>
             @endforeach
           </ul>
         </li>
@@ -44,9 +37,18 @@
           <li class="nav-item"><a class="btn-sm btn btn-outline-primary fs-09" href="{{ route('login') }}">登录</a></li>
           <li class="nav-item"><a class="ml-3 btn-sm btn btn-primary fs-09" href="{{ route('register') }}">加入知乎</a></li>
         @else
+          <li class="nav-item">
+            <a class="nav-link mt-1 mr-3 font-weight-bold" href="{{ route('questions.create') }}">
+              <i class="fa fa-plus"></i>
+            </a>
+          </li>
+          <li class="nav-item notification-badge">
+            <a class="nav-link mr-3 badge badge-pill badge-{{ Auth::user()->unreadNotifications->count() > 0 ? 'hint' : 'secondary' }} text-white" href="{{ route('user-notifications.index') }}">
+              {{ Auth::user()->unreadNotifications->count() }}
+            </a>
+          </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="{{ Auth::user()->userAvatar }}" class="img-responsive img-circle" width="30px" height="30px">
               {{ Auth::user()->name }}
             </a>

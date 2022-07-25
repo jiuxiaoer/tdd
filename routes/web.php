@@ -7,8 +7,8 @@ Auth::routes(['verify' => true]);
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/questions/{category?}', 'QuestionsController@index')->name('questions.index');
 Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
+Route::get('/questions/{category?}', 'QuestionsController@index')->name('questions.index');
 Route::post('/questions', 'QuestionsController@store')->name('questions.store');
 Route::post('/questions/{question}/answers', 'AnswersController@store');
 Route::post('/questions/{question}/published-questions', 'PublishedQuestionsController@store')->name('published-questions.store');
@@ -46,3 +46,4 @@ Route::delete('/comments/{comment}/down-votes', 'CommentDownVotesController@dest
 
 Route::post('/users/{user}/avatar', 'UserAvatarsController@store')->name('user-avatars.store');
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('users.show');
+Route::get('/notifications', 'UserNotificationsController@index')->name('user-notifications.index');
